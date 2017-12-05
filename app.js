@@ -1,76 +1,102 @@
-$(function(){
-	
+$(function () {
+
 	var model = {
-		init: function() {
-            if (!localStorage.count) {
-                localStorage.count = JSON.stringify([]);
-            }
-        },
-        add: function(obj) {
-            var data = JSON.parse(localStorage.count);
-            data.push(obj);
-            localStorage.count = JSON.stringify(data);
-        },
-        getCount: function() {
-            return JSON.parse(localStorage.count);
-        }
+		
+		cat1 : {
+			id : "cat1",
+			count : 0
+		},
+		
+		cat2 : {
+			id : "cat2",
+			count : 0
+		},
+		
+		cat3 : {
+			id : "cat3",
+			count : 0
+		},
+		
+		cat4 : {
+			id : "cat4",
+			count : 0
+		},
+		
+		cat5 : {
+			id : "cat5",
+			count : 0
+		},
+
+		getCount: function (cat) {
+			return cat.count;
+		},
+			
+		setCount : function(cat) {
+			cat.count++;
+		}
 	};
-	
+
 	var octopus = {
-		init : function() {
-			model.init();
+		init: function () {
+//			model.init();
 			view.init();
 		},
+
+		getTheCounter: function (catID) {
+			return model.getCount(catID);
+		},
 		
-		getTheCounter : function() {
-			return model.getCount();
+		incrementTheCounter : function(catID) {
+			model.setCount(catID);
 		}
-		
+
 	};
-	
+
 	var view = {
-		cats : $(".cat"),
-		buttons : $("button"),
-		
-		init : function() {
+		cats: $(".cat"),
+		buttons: $("button"),
+
+		init: function () {
 			this.hideAllCats();
 			$("#cat1").show();
-			this.render;
+			this.render();
 		},
-		
-		render : function() {
-			for (var i=1; i<=buttons.length; i++){
-				bindButtonToCat(i);
+
+		render: function () {
+			for (var i = 1; i <= this.buttons.length; i++) {
+				this.bindButtonToCat(i);
 			}
 
-			for (var i=1; i<=cats.length; i++){
-				bindCounterToCat(i);
+			for (var k = 1; k <= this.cats.length; k++) {
+				this.bindCounterToCat(k);
 			}
 		},
-		
-		hideAllCats : function() {
-			for (var i=0; i<view.cats.length; i++){
-				$(view.cats[i]).hide();
+
+		hideAllCats: function () {
+			for (var j = 0; j < this.cats.length; j++) {
+				$(this.cats[j]).hide();
 			}
 		},
-		
-		bindButtonToCat : function(idNumber) {
-			$("#button"+idNumber).click(function(){
+
+		bindButtonToCat: function (idNumber) {
+			$("#button" + idNumber).click(function () {
 				view.hideAllCats();
-				$("#cat"+idNumber).show();
+				$("#cat" + idNumber).show();
 			})
 		},
-		
-		bindCounterToCat : function(idNumber){
-			var cat = "#cat"+idNumber
-			$(cat).click(function(){
-				var count = $(cat+" > .counter").text();
+
+		bindCounterToCat: function (idNumber) {
+			var cat = "#cat" + idNumber
+			$(cat).click(function () {
+				var count = $(cat + " > .counter").text();
 				count = parseInt(count) + 1;
-				$(cat+" > .counter").text(count);
+				$(cat + " > .counter").text(count);
+				octopus.incrementTheCounter(cat);
 			})
 		}
-				
+
 	};
-	
+
 	octopus.init();
-});	
+
+});
