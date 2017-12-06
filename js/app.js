@@ -43,6 +43,7 @@ var octopus = {
         // tell our views to initialize
         catListView.init();
         catView.init();
+				adminView.init();
     },
 
     getCurrentCat: function() {
@@ -62,7 +63,23 @@ var octopus = {
     incrementCounter: function() {
         model.currentCat.clickCount++;
         catView.render();
-    }
+    },
+	
+		displayAdminArea : function() {
+			adminView.render();
+		},
+	
+		saveCatData : function(count, catName, imgSrc) {
+			
+			// save data in the model
+			model.currentCat.clickCount = count;
+			model.currentCat.name = catName;
+			model.currentCat.imgSrc = imgSrc;
+			
+			catView.render();
+		},
+	
+		
 };
 
 
@@ -76,6 +93,7 @@ var catView = {
         this.catNameElem = document.getElementById('cat-name');
         this.catImageElem = document.getElementById('cat-img');
         this.countElem = document.getElementById('cat-count');
+				this.catSrcElem = document.getElementById('cat-img-src');
 
         // on click, increment the current cat's counter
         this.catImageElem.addEventListener('click', function(){
@@ -92,6 +110,7 @@ var catView = {
         this.countElem.textContent = currentCat.clickCount;
         this.catNameElem.textContent = currentCat.name;
         this.catImageElem.src = currentCat.imgSrc;
+				this.catSrcElem.textContent = currentCat.imgSrc;
     }
 };
 
@@ -137,6 +156,65 @@ var catListView = {
         }
     }
 };
+
+var adminView = {
+	
+	init : function() {
+		// store the DOM elements
+		this.adminButtonElem = document.getElementById('admin');
+		this.catFormElem = document.getElementById('new-cat-form');
+		this.catNewNameElem = document.getElementById('new-cat-content');
+		this.catNewImgElem = document.getElementById('new-img-content');
+		this.catNewCountElem = document.getElementById('new-count-click');
+		this.adminSubmitElem = document.getElementById('admin-submit');
+		this.adminCancelElem = document.getElementById('admin-cancel');
+		
+		// add event listeners to admin
+		this.adminButtonElem.addEventListener('click', function(){
+					octopus.displayAdminArea();
+        });
+		
+		// add event listeners to submit
+		this.adminSubmitElem.addEventListener('click', function(){
+					// store the values
+					var count = $('#new-count-click').val();
+					var catName = $('#new-cat-content').val();
+					var imgSrc = $('#new-img-content').val();
+
+					octopus.saveCatData(count, catName, imgSrc);
+        });
+		
+		// add event listeners to cancel
+		this.adminCancelElem.addEventListener('click', function(){
+					octopus.exitAdminArea();
+        });
+		
+		// update this view
+		this.render();
+	},
+	
+	render : function() {
+		// update the DOM elements with values from the current cat
+		var currentCat = octopus.getCurrentCat();
+		
+		if (this.catFormElem.className.endsWith('hidden')) {
+			this.catFormElem.classList.remove('hidden');
+		} else {
+			this.catFormElem.classList.add('hidden');
+		}
+		
+		// update inputs filled in for the currently-selected cat
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+}
 
 //launch app
 octopus.init();

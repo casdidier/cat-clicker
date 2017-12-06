@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Cat Clicker</title>
+		<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <ul id="cat-list"></ul>
@@ -10,7 +11,19 @@
         <h2 id="cat-name"></h2>
         <div id="cat-count"></div>
         <img id="cat-img" src="" alt="cute cat">
-    </div>
-    <script src="app.js"></script>
+				<div id="cat-img-src"></div>
+    </div><br>
+		<div class="admin">
+			<button id="admin">Admin</button><br><br>
+			<form id="new-cat-form" class="new-cat-form hidden">
+        <input id="new-cat-content" class="new-cat-name"><br><br>
+				<input id="new-img-content" class="new-img-content"><br><br>
+				<input id="new-count-click" class="new-count-click"><br><br>
+				<button type="submit" form="admin" value="save" id="admin-submit">Submit</button>
+				<button type="submit" form="admin" value="cancel" id="admin-cancel">Cancel</button>
+    	</form>
+		</div>
+    <script src="js/app.js"></script>
+		<script src="jquery.js"></script>
 </body>
 </html>
