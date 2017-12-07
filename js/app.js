@@ -69,6 +69,10 @@ var octopus = {
 			adminView.render();
 		},
 	
+		exitAdminArea : function() {
+			adminView.render();
+		},
+	
 		saveCatData : function(count, catName, imgSrc) {
 			
 			// save data in the model
@@ -197,6 +201,7 @@ var adminView = {
 		// update the DOM elements with values from the current cat
 		var currentCat = octopus.getCurrentCat();
 		
+		// toogle the admin area display
 		if (this.catFormElem.className.endsWith('hidden')) {
 			this.catFormElem.classList.remove('hidden');
 		} else {
@@ -204,7 +209,9 @@ var adminView = {
 		}
 		
 		// update inputs filled in for the currently-selected cat
-		
+		this.catNewNameElem.value = currentCat.name;
+		this.catNewImgElem.value = currentCat.imgSrc;
+		this.catNewCountElem.value = currentCat.clickCount;
 		
 	}
 	
